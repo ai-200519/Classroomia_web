@@ -37,7 +37,7 @@ const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps) => {
   const router = useRouter();
 
   const form = useForm<DescriptionFormSchemaType>({
-    mode: 'onBlur',
+    mode: 'onChange',
     defaultValues: { description: initialData?.description || '' },
 
     resolver: zodResolver(descriptionFormSchema),
@@ -61,10 +61,10 @@ const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps) => {
   return (
     <div className='mt-6 rounded-md border bg-slate-100 p-4'>
       <div className='flex items-center justify-between font-medium'>
-        Description du cours 
+        Description du cours
         <Button onClick={toggleIsEditing}>
           {isEditing ? (
-            'Cancel'
+            'Annuler'
           ) : (
             <>
               <PencilIcon className='mr-2 h-4 w-4' />
@@ -79,7 +79,9 @@ const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps) => {
             'mt-2 text-sm',
             !initialData.description && 'italic text-slate-500',
           )}>
-          {initialData.description ?? 'No description'}
+          {initialData.description
+            ? initialData.description.slice(0, 20) + (initialData.description.length > 20 ? '...' : '')
+            : 'Pas description'}
         </p>
       )}
       {isEditing && (
@@ -95,7 +97,7 @@ const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps) => {
                   <FormControl>
                     <Textarea
                       disabled={isSubmitting}
-                      placeholder='e.g. Cette formation vous apprendra les bases du développement web, y compris HTML, CSS et JavaScript...'
+                      placeholder='e.g. Cette formation est destinée aux développeurs débutants...'
                       {...field}
                     />
                   </FormControl>

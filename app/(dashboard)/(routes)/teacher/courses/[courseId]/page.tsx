@@ -1,12 +1,16 @@
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs/server";
-import { LayoutDashboard } from "lucide-react";
+import { AlertCircle, CheckCircle, CircleDollarSign, File, LayoutDashboard, ListChecks } from "lucide-react";
 import { redirect } from "next/navigation";
 import { Progress } from "@/components/ui/progress";
 import  IconBadge  from "@/components/icon-badge";
 import TitleForm from "./_components/title-form";
 import DescriptionForm from "./_components/description-form";
 import ImageForm from "./_components/image-form";
+import CategoryForm from "./_components/category-form";
+import PriceForm from "./_components/price-form";
+import AttachmentForm from "./_components/attachment-form";
+import ChaptersForm from "./_components/chapters-form";
 
 
 const CourseIdPage = async ({params}:{
@@ -22,18 +26,31 @@ const CourseIdPage = async ({params}:{
         where: {
             id: courseId,
         },
+        include: {
+            chapters: {
+                orderBy: { position: 'asc' },
+            },
+            attachments: {
+                orderBy: { createdAt: 'desc' },
+            }
+        }    
     });
 
     if (!course) {
         return redirect("/sign-up");
     }    
-
+    
+    const categories = await db.category.findMany({
+        orderBy: { name: 'asc' },
+    });
+    
     const requiredFields = [
         course.title,
         course.description,
         course.imageUrl,
         course.price,
         course.categoryId,
+        course.chapters.some(chapter => chapter.isPublished),
     ];
 
     const totalFields = requiredFields.length;
@@ -41,7 +58,7 @@ const CourseIdPage = async ({params}:{
 
     const completionFields = `(${completedFields}/${totalFields})`;
     const progress = (completedFields / totalFields) * 100;
-
+    const isComplete = completedFields === totalFields
     return ( 
         <div className="p-6 bg-slate-50">
             <div className="flex items-center justify-between mb-4">
@@ -51,12 +68,21 @@ const CourseIdPage = async ({params}:{
                     </h1>
                     <span className="flex flex-col items-start gap-y-2">
                         <span className="text-sm text-slate-700">
-                            remplissez tous les champs nécessaires {completionFields}
+                            remplissez tous les champs nécessaires pour publier ce cursus
                         </span>
-                        <Progress value={progress} className="h-2 bg-slate-200" />
-                    </span>
-                    
+                    </span>    
                 </div>
+                <div className="text-right">
+                    <div className="flex items-center gap-2 mb-2">
+                        {isComplete ? (
+                        <CheckCircle className="h-5 w-5 text-green-600" />
+                        ) : (
+                        <AlertCircle className="h-5 w-5 text-amber-600" />
+                        )}
+                        <span className="text-sm font-medium text-slate-700">Champs complétés {completionFields}</span>
+                    </div>
+                    <Progress value={progress} className="w-32" />
+                </div>                
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16">
                 <div>
@@ -77,7 +103,54 @@ const CourseIdPage = async ({params}:{
                     <ImageForm
                         initialData={course}
                         courseId={course.id}    
-                    />                    
+                    />         
+                    <CategoryForm
+                        initialData={course}
+                        courseId={course.id}   
+                        options={categories.map((category) => ({
+                            name: category.name,
+                            id: category.id,
+                        }))} 
+                    />                                         
+                </div>
+                <div className="space-y-6">
+                    <div>
+                        <div className="flex items-center gap-x-2 mb-4">
+                            <IconBadge icon={ListChecks} />
+                            <h2 className="text-xl">
+                                Chapitres et sections
+                            </h2> 
+                        </div>
+                        <div>
+                        <ChaptersForm 
+                        initialData={course}
+                        courseId={course.id}
+                        />
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-x-2 mb-4">
+                        <IconBadge icon={CircleDollarSign} />
+                        <h2 className="text-xl">
+                            Offrez votre cours
+                        </h2>
+                    </div>
+                    <PriceForm 
+                        initialData={course}
+                        courseId={course.id}
+                    />
+                </div>
+                <div>
+                    <div className="flex items-center gap-x-2 mb-4">
+                        <IconBadge icon={File} />
+                        <h2 className="text-xl">
+                            Ressources & Attachments
+                        </h2>
+                    </div>
+                    <AttachmentForm
+                        initialData={course}
+                        courseId={course.id}    
+                    />         
+
                 </div>
             </div>
 

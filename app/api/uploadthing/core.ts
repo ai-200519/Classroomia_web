@@ -4,23 +4,24 @@ import { createUploadthing, type FileRouter } from 'uploadthing/next';
 const f = createUploadthing();
 
 const handleAuth = async () => {
-  const { userId } = await auth();
-  if (!userId) {
-    // If you throw, the user will not be able to upload
-    throw new Error('Non autorisé, veuillez vous ressayer ');
-  }
-  // Whatever is returned here is accessible in onUploadComplete as `metadata`
-  return { userId };
-};
+  try {
+    const { userId } = await auth();
+    if (!userId) throw new Error('Non autorisé, veuillez vous ressayer ');
+    return { userId };
+  } catch (error) {
+    console.error('[UPLOADTHING_AUTH]', error);
+    throw new Error('Erreur d\'authentification');
+}};
 
-// FileRouter for your app, can contain multiple FileRoutes. Define as many FileRoutes as you like, each with a unique routeSlug.
 export const ourFileRouter = {
-  // Set permissions and file types for this FileRoute
   courseImage: f({ image: { maxFileSize: '16MB', maxFileCount: 1 } })
     // This code runs on your server before upload
     .middleware(() => handleAuth())
     // Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
-    .onUploadComplete(() => {}),
+    .onUploadComplete(async ({ file }) => {
+      console.log(`[UPLOAD_SUCCESS] ${file.name}`);
+      return { success: true };
+    }),
   courseAttachment: f({
     image: {
       maxFileSize: '16MB',

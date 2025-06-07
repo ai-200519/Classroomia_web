@@ -36,7 +36,7 @@ const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
   const router = useRouter();
 
   const form = useForm<TitleFormSchemaType>({
-    mode: 'onBlur',
+    mode: 'onChange',
     defaultValues: { title: initialData?.title || '' },
     resolver: zodResolver(titleFormSchema),
   });

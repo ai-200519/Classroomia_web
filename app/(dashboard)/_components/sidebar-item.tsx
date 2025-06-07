@@ -22,32 +22,30 @@ export const SidebarItem = ({ icon: Icon, label, href }: SidebarItemProps) => {
       router.push(href);
     }
     return (
-        <button 
-            onClick={onClick}
-            type="button"
-            className={cn(
-                "group flex items-center gap-x-2 text-slate-500 text-sm font-[500] pl-6 transition-all hover:text-slate-600 hover:bg-slate-300/20",
-                isActive && "bg-sky-200/20 text-sky-700 hover:bg-sky-200/20 hover:text-sky-700",
-            )}
-        >
-            <div className="flex items-center gap-x-2 py-4">
-                <Icon
-                    size={22}
-                    className={cn(
-                        "text-slate-500 transition-colors",
-                        isActive && "text-sky-700",
-                        "group-hover:text-slate-600"
-                    )}
-                />
-                {label}
-            </div>
-            <div className={cn(
-                "ml-auto opacity-0 w-1 h-full transition-all",
-                !isActive && "bg-transparent group-hover:bg-slate-400",
-                isActive && "bg-sky-700",
-                "group-hover:opacity-100",
-                isActive && "opacity-100"
-            )} />
-        </button>
+        <button
+        onClick={onClick}
+        type="button"
+        className={cn(
+          "group flex items-center gap-x-2 text-slate-500 text-sm font-[500] pl-6 transition-all hover:text-slate-600 hover:bg-slate-300/20",
+          isActive && "bg-slate-200/20 text-sky-700 hover:bg-sky-200/20 hover:text-sky-700",
+        )}
+      >
+        <div className="flex items-center gap-x-2 py-4">
+          <Icon
+            size={22}
+            className={cn("text-slate-500 transition-colors", isActive && "text-sky-700", "group-hover:text-slate-600")}
+          />
+          {label}
+        </div>
+        <div
+          className={cn(
+            "ml-auto opacity-0 w-0.5 h-full transition-all",
+            !isActive && "bg-transparent group-hover:bg-slate-400",
+            isActive && "bg-sky-700",
+            "group-hover:opacity-100",
+            isActive && "opacity-100",
+          )}
+        />
+      </button>
     );
 };
