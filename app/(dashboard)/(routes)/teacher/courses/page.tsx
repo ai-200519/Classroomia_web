@@ -1,19 +1,29 @@
-import { Button } from "@/components/ui/button";
-import { BookOpenCheck } from "lucide-react";
-import Link from "next/link";
+import React from 'react'
+import { DataTable } from './_components/data-table'
+import { auth } from '@clerk/nextjs/server'
+import { redirect } from 'next/navigation'
+import { db } from '@/lib/db'
+import { columns } from './_components/colomns'
 
-const CoursesPage = () => {
+const CoursesPage = async () => {
+    const { userId } = await auth()
+
+    if (!userId) return redirect('/')
+
+    const courses = await db.course.findMany({
+        where: {
+            userId: userId
+        },
+        orderBy: {
+            createdAt: 'asc'
+        }
+    })
+
     return (
-        <div className="p-6 bg-slate-50">
-            <Link href="/teacher/create" >
-                <Button>
-                    <BookOpenCheck className="h-4 w-4 mr-2" />
-                    Nouveau Cursus
-                </Button>
-            </Link>            
-        </div> 
-    );    
-   
+        <div className='p-6 max-w-7xl mx-auto'>
+            <DataTable columns={columns} data={courses} />
+        </div>
+    )
 }
- 
-export default CoursesPage;
+
+export default CoursesPage
