@@ -9944,6 +9944,7 @@ export namespace Prisma {
 
   export type PurchaseWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    userId_courseId?: PurchaseUserIdCourseIdCompoundUniqueInput
     AND?: PurchaseWhereInput | PurchaseWhereInput[]
     OR?: PurchaseWhereInput[]
     NOT?: PurchaseWhereInput | PurchaseWhereInput[]
@@ -9952,7 +9953,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Purchase"> | Date | string
     courseId?: StringFilter<"Purchase"> | string
     course?: XOR<CourseScalarRelationFilter, CourseWhereInput>
-  }, "id">
+  }, "id" | "userId_courseId">
 
   export type PurchaseOrderByWithAggregationInput = {
     id?: SortOrder
@@ -11013,6 +11014,11 @@ export namespace Prisma {
     fields: PurchaseOrderByRelevanceFieldEnum | PurchaseOrderByRelevanceFieldEnum[]
     sort: SortOrder
     search: string
+  }
+
+  export type PurchaseUserIdCourseIdCompoundUniqueInput = {
+    userId: string
+    courseId: string
   }
 
   export type PurchaseCountOrderByAggregateInput = {
