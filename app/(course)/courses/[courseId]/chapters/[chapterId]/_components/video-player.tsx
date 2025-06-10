@@ -1,6 +1,6 @@
 'use client'
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import MuxPlayer from '@mux/mux-player-react'
 import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
@@ -8,7 +8,6 @@ import { Loader2, Lock } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 import { useConfettiStore } from '@/hooks/use-confetti-store'
-
 
 interface VideoPlayerProps {
   chapterId: string,
@@ -19,10 +18,16 @@ interface VideoPlayerProps {
   isLocked: boolean,
   completeOnEnd: boolean,
 }
+
 const VideoPlayer = ({ chapterId, title, courseId, nextChapterId, playbackId, isLocked, completeOnEnd }: VideoPlayerProps) => {
   const [isReady, setIsReady] = useState<boolean>(false)
+  const [mounted, setMounted] = useState(false)
   const router = useRouter()
   const confetti = useConfettiStore();
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const onEnd = async () => {
     try {
@@ -47,6 +52,16 @@ const VideoPlayer = ({ chapterId, title, courseId, nextChapterId, playbackId, is
     }
   }
 
+  if (!mounted) {
+    return (
+      <div className='relative aspect-video'>
+        <div className='absolute inset-0 flex items-center justify-center bg-slate-800'>
+          <Loader2 className='h-8 w-8 animate-spin text-secondary' />
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className='relative aspect-video'>
       {!isLocked && !isReady && (
@@ -61,7 +76,15 @@ const VideoPlayer = ({ chapterId, title, courseId, nextChapterId, playbackId, is
         </div>
       )}
       {!isLocked && (
-        <MuxPlayer title={title} className={cn(!isReady && "hidden")} onCanPlay={() => setIsReady(true)} onEnded={onEnd} autoPlay playbackId={playbackId} />
+        <MuxPlayer 
+          title={title} 
+          className={cn(!isReady && "hidden")} 
+          onCanPlay={() => setIsReady(true)} 
+          onEnded={onEnd} 
+          autoPlay 
+          playbackId={playbackId}
+          streamType="on-demand"
+        />
       )}
     </div>
   )

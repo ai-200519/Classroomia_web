@@ -1,0 +1,101 @@
+version: "3.1"
+
+nlu:
+- intent: greet
+  examples: |
+    - Bonjour
+    - Salut
+    - Hey
+    - Bonsoir
+    - Bonjour, comment ça va ?
+    - Salut, comment vas-tu ?
+
+- intent: goodbye
+  examples: |
+    - Au revoir
+    - À bientôt
+    - À plus tard
+    - Bye
+    - Au revoir, bonne journée
+    - À bientôt, bonne continuation
+
+- intent: thank
+  examples: |
+    - Merci
+    - Merci beaucoup
+    - Je te remercie
+    - C'est gentil
+    - Super, merci
+    - Parfait, merci
+
+- intent: ask_my_courses
+  examples: |
+    - Quels sont mes cours ?
+    - Montre-moi les cours auxquels je suis inscrit
+    - Liste mes cours
+    - Quels cours suis-je en train de suivre ?
+    - Où puis-je voir mes cours ?
+    - Montre-moi mes cours inscrits
+
+- intent: ask_created_courses
+  examples: |
+    - Quels cours ai-je créés ?
+    - Montre-moi mes cours créés
+    - Liste les cours que j'ai créés
+    - Combien d'étudiants suivent mes cours ?
+    - Quels sont mes cours en tant que professeur ?
+    - Montre-moi les cours que j'enseigne
+
+- intent: ask_course_details
+  examples: |
+    - Quels sont les détails du cours [X] ?
+    - Peux-tu me donner plus d'informations sur le cours [X] ?
+    - Je veux en savoir plus sur le cours [X]
+    - Décris-moi le cours [X]
+    - Qu'est-ce que je vais apprendre dans [X] ?
+    - Parle-moi du cours [X]
+
+- intent: ask_course_progress
+  examples: |
+    - Où en suis-je dans le cours [X] ?
+    - Quelle est ma progression dans [X] ?
+    - Combien de chapitres ai-je terminés dans [X] ?
+    - Montre-moi ma progression dans [X]
+    - Suis-je en retard dans [X] ?
+    - Quel est mon avancement dans [X] ?
+
+- intent: ask_course_price
+  examples: |
+    - Combien coûte le cours [X] ?
+    - Quel est le prix de [X] ?
+    - Est-ce que [X] est gratuit ?
+    - Je veux connaître le prix de [X]
+    - C'est combien le cours [X] ?
+    - Le cours [X] est-il payant ?
+
+- intent: ask_course_categories
+  examples: |
+    - Quelles sont les catégories de cours disponibles ?
+    - Montre-moi toutes les catégories
+    - Quels types de cours proposez-vous ?
+    - Je veux voir les catégories
+    - Quelles sont les différentes catégories ?
+    - Liste-moi les catégories de cours
+
+- intent: ask_help
+  examples: |
+    - Aide-moi
+    - Je ne comprends pas
+    - Comment ça marche ?
+    - Que peux-tu faire ?
+    - Je ne sais pas comment utiliser le chatbot
+    - Montre-moi les commandes disponibles
+
+- intent: out_of_scope
+  examples: |
+    - Je veux commander une pizza
+    - Quel temps fait-il ?
+    - Raconte-moi une blague
+    - Je veux jouer à un jeu
+    - Peux-tu me chanter une chanson ?
+    - Je veux regarder un film

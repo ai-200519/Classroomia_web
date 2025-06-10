@@ -1,0 +1,67 @@
+version: "3.1"
+
+stories:
+
+- story: direct path to ask my courses
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: ask_my_courses
+  - action: action_get_my_courses
+
+- story: direct path to ask created courses
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: ask_created_courses
+  - action: action_get_created_courses
+
+- story: path to ask course details
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: ask_course_details
+  - action: action_get_course_details
+
+- story: path to ask course progress
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: ask_course_progress
+  - action: action_get_course_progress
+
+- story: path to ask course price
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: ask_course_price
+  - action: action_get_course_price
+
+- story: path to ask categories
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: ask_course_categories
+  - action: action_get_course_categories
+
+- story: path to help
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: ask_help
+  - action: utter_help
+
+- story: path to thank
+  steps:
+  - intent: thank
+  - action: utter_thank
+
+- story: path to goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: out of scope
+  steps:
+  - intent: out_of_scope
+  - action: utter_out_of_scope

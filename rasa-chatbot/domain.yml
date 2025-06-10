@@ -1,0 +1,65 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - ask_my_courses
+  - ask_created_courses
+  - ask_course_details
+  - ask_course_progress
+  - ask_course_price
+  - ask_course_categories
+  - ask_help
+  - thank
+  - out_of_scope
+
+responses:
+  utter_greet:
+  - text: "Bonjour ! Je suis votre assistant d'apprentissage. Comment puis-je vous aider aujourd'hui ?"
+  - text: "Salut ! Bienvenue sur notre plateforme d'apprentissage. Que puis-je faire pour vous ?"
+  - text: "Bonjour ! Je suis là pour vous accompagner dans vos études. Posez-moi vos questions !"
+
+  utter_cheer_up:
+  - text: "Here is something to cheer you up:"
+    image: "https://i.imgur.com/nGF1K8f.jpg"
+
+  utter_did_that_help:
+  - text: "Did that help you?"
+
+  utter_happy:
+  - text: "Great, carry on!"
+
+  utter_goodbye:
+  - text: "Au revoir ! Bonne continuation dans vos études !"
+  - text: "À bientôt ! N'hésitez pas à revenir si vous avez des questions."
+  - text: "Bonne journée ! Continuez à bien apprendre !"
+
+  utter_iamabot:
+  - text: "I am a bot, powered by Rasa."
+
+  utter_thank:
+  - text: "Je vous en prie ! C'est un plaisir de vous aider."
+  - text: "Avec plaisir ! Y a-t-il autre chose que je puisse faire pour vous ?"
+  - text: "De rien ! Je suis là pour ça."
+
+  utter_help:
+  - text: "Je peux vous aider à :\n- Voir vos cours inscrits\n- Voir les cours que vous avez créés\n- Consulter les détails d'un cours\n- Voir votre progression\n- Découvrir les catégories de cours"
+  - text: "Voici ce que je peux faire pour vous :\n- Lister vos cours\n- Donner des informations sur les cours\n- Voir votre progression\n- Vous aider avec les catégories"
+
+  utter_out_of_scope:
+  - text: "Désolé, je ne comprends pas bien votre demande. Pourriez-vous la reformuler ?"
+  - text: "Je ne suis pas sûr de comprendre. Pourriez-vous préciser votre question ?"
+
+actions:
+  - action_get_my_courses
+  - action_get_created_courses
+  - action_get_course_details
+  - action_get_course_progress
+  - action_get_course_price
+  - action_get_course_categories
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
