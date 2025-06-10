@@ -19,7 +19,7 @@ const StudentsPage = async () => {
     const averageProgress = students.reduce((acc, student) => acc + student.totalProgress, 0) / (totalStudents || 1)
 
     return (
-        <div className="p-6 space-y-6">
+        <div className="p-6 space-y-6 bg-slate-50">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <Card className="p-4">
                     <div className="flex items-center gap-x-2">

@@ -15,7 +15,7 @@ const Dashboard = async () => {
     const totalCourses = completedCourses.length + coursesInProgress.length
 
     return (
-        <div className='p-6 space-y-4'>
+        <div className='p-6 space-y-4 bg-slate-50'>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <InfoCard 
                     icon={BookOpen} 

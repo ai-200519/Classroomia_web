@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation'
 import { db } from '@/lib/db'
 import { columns } from './_components/colomns'
 import { Card } from '@/components/ui/card'
-import { BookOpen, DollarSign, TrendingUp } from 'lucide-react'
+import { BookOpen, DollarSign } from 'lucide-react'
 
 const CoursesPage = async () => {
     const { userId } = await auth()
@@ -29,12 +29,8 @@ const CoursesPage = async () => {
     const totalPrice = courses
         .filter(course => course.isPublished)
         .reduce((acc, course) => acc + (course.price || 0), 0)
-    const totalRevenue = courses.reduce((acc, course) => {
-        return acc + (course.price || 0) * course.purchases.length
-    }, 0)
-
     return (
-        <div className='p-6 max-w-7xl mx-auto space-y-6'>
+        <div className='p-6 max-w-7xl mx-auto space-y-6 bg-slate-50'>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <Card className="p-4">
                     <div className="flex items-center gap-x-2">
@@ -55,18 +51,6 @@ const CoursesPage = async () => {
                                 style: "currency",
                                 currency: "USD"
                             }).format(totalPrice)}</p>
-                        </div>
-                    </div>
-                </Card>
-                <Card className="p-4">
-                    <div className="flex items-center gap-x-2">
-                        <TrendingUp className="h-5 w-5 text-purple-500" />
-                        <div>
-                            <p className="font-medium">Revenus</p>
-                            <p className="text-2xl font-bold">{new Intl.NumberFormat("en-US", {
-                                style: "currency",
-                                currency: "USD"
-                            }).format(totalRevenue)}</p>
                         </div>
                     </div>
                 </Card>
