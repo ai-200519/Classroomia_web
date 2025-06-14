@@ -4,10 +4,17 @@ import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import { db } from "@/lib/db";
 
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
 export async function POST(req: Request) {
     try {
         const body = await req.text();
-        const signature = (await headers()).get("Stripe-Signature");
+        const headersList = await headers();
+        const signature = headersList.get("Stripe-Signature");
 
         if (!signature) {
             console.error("No Stripe signature found in headers");
@@ -34,9 +41,9 @@ export async function POST(req: Request) {
             return new NextResponse(`Webhook Error: ${errorMessage}`, { status: 400 });
         }
 
-    const session = event.data.object as Stripe.Checkout.Session
-    const userId = session?.metadata?.userId;
-    const courseId = session?.metadata?.courseId;
+        const session = event.data.object as Stripe.Checkout.Session;
+        const userId = session?.metadata?.userId;
+        const courseId = session?.metadata?.courseId;
 
         if (event.type === "checkout.session.completed") {
             if (!userId || !courseId) {
