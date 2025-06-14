@@ -121,6 +121,10 @@ const AnalyticsPage = async () => {
                                             <p className="font-medium text-blue-600">{course.inProgress}</p>
                                             <p className="text-muted-foreground">En Progress</p>
                                         </div>
+                                        <div className="text-center">
+                                            <p className="font-medium text-gray-600">{course.notStarted}</p>
+                                            <p className="text-muted-foreground">Pas commencé</p>
+                                        </div>
                                     </div>
                                 </div>
                             ))}

@@ -71,6 +71,7 @@ export const getAnalytics = async (userId: string) => {
       });
 
       const completedStudents = studentProgress.filter(progress => progress === 100).length;
+      const notStartedStudents = studentProgress.filter(progress => progress === 0).length;      
       const inProgressStudents = studentProgress.filter(progress => progress > 0 && progress < 100).length;
       const averageCompletionRate = studentProgress.reduce((acc, curr) => acc + curr, 0) / (totalStudents || 1);
 
@@ -79,6 +80,7 @@ export const getAnalytics = async (userId: string) => {
         totalStudents,
         completed: completedStudents,
         inProgress: inProgressStudents,
+        notStarted: notStartedStudents,
         completionRate: Math.round(averageCompletionRate),
         revenue: course.price! * totalStudents,
         enrollments: totalStudents,

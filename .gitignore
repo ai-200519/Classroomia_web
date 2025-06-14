@@ -101,3 +101,5 @@ htmlcov/
 # Local development
 *.local
 local_settings.py
+
+certificates

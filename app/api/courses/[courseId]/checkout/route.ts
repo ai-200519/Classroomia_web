@@ -67,16 +67,12 @@ export async function POST(req: Request, { params }: { params: { courseId: strin
             })
         }
 
-        // Get the origin from the request headers
-        const origin = req.headers.get('origin') || 'http://localhost:3000'
-        const baseUrl = process.env.NEXT_PUBLIC_APP_URL || origin
-
         const session = await stripe.checkout.sessions.create({
             customer: stripeCustomer.stripeCustomerId,
             line_items,
             mode: 'payment',
-            success_url: `${baseUrl}/courses/${course.id}?success=1`,
-            cancel_url: `${baseUrl}/courses/${course.id}?canceled=1`,
+            success_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/courses/${course.id}?success=1`,
+            cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/courses/${course.id}?canceled=1`,
             metadata: {
                 courseId: course.id,
                 userId: user.id
